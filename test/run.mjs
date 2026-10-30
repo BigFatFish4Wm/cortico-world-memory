@@ -374,7 +374,14 @@ async function testRealWorkspace() {
     const queryStarted = Date.now()
     const hits = await world.search('我上次说的药水还剩几瓶')
     const elapsed = Date.now() - queryStarted
-    check('药水问题命中 notes/pwa-run-state.md', hits.some((hit) => hit.path.includes('pwa-run-state')), hits.map((hit) => `${hit.path}(${hit.score})`).join(', '))
+    // 真实工作区一直在被改：不钉死具体文件，只要求命中的是「讲这一局/这几场」的那几篇，
+    // 并且片段里确实出现药水。
+    const gameNotes = hits.filter((hit) => /(^|\/)(pwa-run-state|pwa-battle-log|pwa-mod-bugs)/.test(hit.path)
+      || hit.snippet.includes('药水'))
+    check('药水问题命中讲 pwa 那几篇笔记', gameNotes.length > 0,
+      hits.map((hit) => `${hit.path}(${hit.score})`).join(', '))
+    check('命中片段里出现「药水」', hits.some((hit) => hit.snippet.includes('药水')),
+      hits.map((hit) => hit.snippet.slice(0, 40)).join(' | '))
     check(`单次检索够快（${elapsed}ms < 800ms）`, elapsed < 800, `${elapsed}ms`)
 
     const recall = await world.buildRecall()

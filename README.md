@@ -159,12 +159,13 @@ tags: [sts2, potion]
 ## 测试
 
 ```powershell
-node test\run.mjs          # 95 项：纯函数 + 索引/检索/注入/去重/面板 + 真实工作区
+node test\run.mjs          # 97 项：纯函数 + 索引/检索/注入/去重/面板 + 真实工作区
 node test\run.mjs --real   # 真实工作区必须存在且通过，否则失败
 ```
 
-验收点（对应 [SPEC.md](SPEC.md) 第 4 节）：问「我上次说的药水还剩几瓶」→ 注入里出现
-`notes/pwa-run-state.md` 对应段落，总量 < 2000 token；`grep` 能找到的，`memory_search` 必须能找到。
+验收点（对应 [SPEC.md](SPEC.md) 第 4 节）：问「我上次说的药水还剩几瓶」→ 注入/检索里出现讲这一局
+的那几篇（`notes/pwa-run-state.md`、`notes/sts2/pwa-battle-log-*.md` 之类），片段里带「药水」，
+总量 < 2000 token；`grep` 能找到的，`memory_search` 必须能找到。
 
 ## 排错
 

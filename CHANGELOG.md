@@ -46,5 +46,5 @@
 
 **验证**
 
-- 95 项端到端测试（含真实工作区 99 篇 / 6537 段）全过
+- 97 项端到端测试（含真实工作区，当前 103 篇 / 6534 段）全过
 - Coopanion `dryMountWorld` + `parseExtensionManifest`：0 failure / 0 warning
