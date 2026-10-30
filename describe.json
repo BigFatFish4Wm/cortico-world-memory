@@ -1,0 +1,50 @@
+{
+  "tools": [
+    {
+      "name": "memory_search",
+      "description": "在自己的工作区笔记里检索（本地全文 + 本地向量，零 API 成本）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "关键词或一句话" },
+          "k": { "type": "integer", "description": "要几条（1–20）" },
+          "status": { "type": "string", "description": "active / unfinished / superseded / archived / any" },
+          "maxAgeDays": { "type": "integer", "description": "只要这么多天内改过的；0 = 不限" },
+          "path": { "type": "string", "description": "只在这个路径里搜" }
+        },
+        "required": ["query"]
+      },
+      "tags": ["read"],
+      "summary": {
+        "zh": "在工作区笔记里搜相关段落",
+        "en": "Search the workspace notes for relevant chunks"
+      }
+    },
+    {
+      "name": "memory_index",
+      "description": "增量重建工作区记忆索引（按 mtime+hash，只重切改过的文件）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "reset": { "type": "boolean", "description": "true = 从头重建" }
+        }
+      },
+      "tags": ["write"],
+      "summary": {
+        "zh": "增量重建记忆索引",
+        "en": "Rebuild the memory index incrementally"
+      }
+    },
+    {
+      "name": "memory_status",
+      "description": "记忆索引状态：索引了哪个目录、多少篇/多少段、最近注入了什么。",
+      "parameters": { "type": "object", "properties": {} },
+      "tags": ["read"],
+      "summary": {
+        "zh": "看索引规模与上次注入了什么",
+        "en": "Index size and what the last recall injected"
+      }
+    }
+  ],
+  "events": []
+}

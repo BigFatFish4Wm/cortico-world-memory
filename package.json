@@ -1,0 +1,58 @@
+{
+  "name": "cortico-world-memory",
+  "version": "1.0.0",
+  "description": "Cortico / Coopanion World: index the workspace markdown locally (SQLite FTS5 trigram + local vectors), recall the few notes that matter into every rebuilt system prefix, and let the model search them on demand.",
+  "author": "BigFatWhale",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BigFatFish4Wm/cortico-world-memory.git"
+  },
+  "homepage": "https://github.com/BigFatFish4Wm/cortico-world-memory#readme",
+  "bugs": {
+    "url": "https://github.com/BigFatFish4Wm/cortico-world-memory/issues"
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "ENV_PROMPT.md",
+    "describe.json",
+    "lib",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "cortico-world",
+    "cortico",
+    "coopanion",
+    "memory",
+    "recall",
+    "fts5",
+    "sqlite",
+    "local-first"
+  ],
+  "scripts": {
+    "test": "node test/run.mjs",
+    "install:ext": "node tools/install.mjs",
+    "pack": "node tools/pack.mjs"
+  },
+  "cortico": {
+    "kind": "world",
+    "api": 6,
+    "displayName": "记忆检索",
+    "description": "把工作区的 markdown 建成本地索引，每轮重建前缀时自动捞几条相关笔记；纯本地，零 API 成本。",
+    "webUiClient": "client.js",
+    "describe": "describe.json",
+    "tags": [
+      "memory"
+    ]
+  }
+}
