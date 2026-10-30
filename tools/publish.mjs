@@ -230,14 +230,20 @@ async function main() {
   }
 
   const releaseDir = join(ROOT, 'release')
-  const existing = new Set((release.assets ?? []).map((asset) => asset.name))
+  const assets = new Map((release.assets ?? []).map((asset) => [asset.name, asset]))
   if (existsSync(releaseDir)) {
     for (const name of readdirSync(releaseDir).filter((item) => item.endsWith('.zip'))) {
-      if (existing.has(name)) {
-        console.log(`[publish] 资产已存在，跳过 ${name}`)
+      const data = readFileSync(join(releaseDir, name))
+      // 同名资产内容变了（大小不同）就先删掉再传，否则 release 上会一直是旧包。
+      const existing = assets.get(name)
+      if (existing && existing.size === data.length) {
+        console.log(`[publish] 资产未变，跳过 ${name}`)
         continue
       }
-      const data = readFileSync(join(releaseDir, name))
+      if (existing) {
+        await api(`/repos/${owner}/${REPO}/releases/assets/${existing.id}`, { method: 'DELETE' })
+        console.log(`[publish] 旧资产已删除 ${name}`)
+      }
       const uploaded = await fetch(
         `https://uploads.github.com/repos/${owner}/${REPO}/releases/${release.id}/assets?name=${encodeURIComponent(name)}`,
         {
